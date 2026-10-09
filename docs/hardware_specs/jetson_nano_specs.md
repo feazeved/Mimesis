@@ -1,7 +1,5 @@
 # myCobot 280 Jetson Nano - Full Hardware & Reconnaissance Specs
 
-This document maps all the hardware constraints, active services, and security permissions of the Jetson Nano for Module 1. It acts as an onboarding guide and architectural reference for the team.
-
 ## 1. System & Architecture
 
 | Component | Status / Specification | Verification Command | Description & Notes |
