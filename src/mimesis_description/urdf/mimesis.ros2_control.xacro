@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+  ros2_control description of the arm. One file for simulation and for the real robot:
+  only the hardware plugin changes, the joints and interfaces stay the same.
+
+    use_mock_hardware=true   mock_components/GenericSystem: commands are copied to states.
+                             Lets you run controllers and MoveIt with no arm attached.
+    use_mock_hardware=false  our C++ driver plugin (not written yet; name reserved below).
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="mycobot_joint_interfaces" params="prefix index lower_deg upper_deg">
+    <joint name="${prefix}joint${index}">
+      <command_interface name="position">
+        <param name="min">${radians(lower_deg)}</param>
+        <param name="max">${radians(upper_deg)}</param>
+      </command_interface>
+      <state_interface name="position">
+        <param name="initial_value">0.0</param>
+      </state_interface>
+      <state_interface name="velocity"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:macro name="mimesis_ros2_control"
+    params="name prefix use_mock_hardware serial_port:=/dev/ttyTHS1 baud_rate:=1000000">
+    <ros2_control name="${name}" type="system">
+      <hardware>
+        <xacro:if value="${use_mock_hardware}">
+          <plugin>mock_components/GenericSystem</plugin>
+        </xacro:if>
+        <xacro:unless value="${use_mock_hardware}">
+          <plugin>mimesis_hardware/MyCobot280System</plugin>
+          <param name="serial_port">${serial_port}</param>
+          <param name="baud_rate">${baud_rate}</param>
+        </xacro:unless>
+      </hardware>
+      <xacro:mycobot_joint_interfaces prefix="${prefix}" index="1" lower_deg="-168" upper_deg="168"/>
+      <xacro:mycobot_joint_interfaces prefix="${prefix}" index="2" lower_deg="-140" upper_deg="140"/>
+      <xacro:mycobot_joint_interfaces prefix="${prefix}" index="3" lower_deg="-150" upper_deg="150"/>
+      <xacro:mycobot_joint_interfaces prefix="${prefix}" index="4" lower_deg="-150" upper_deg="150"/>
+      <xacro:mycobot_joint_interfaces prefix="${prefix}" index="5" lower_deg="-155" upper_deg="160"/>
+      <xacro:mycobot_joint_interfaces prefix="${prefix}" index="6" lower_deg="-180" upper_deg="180"/>
+    </ros2_control>
+  </xacro:macro>
+
+</robot>

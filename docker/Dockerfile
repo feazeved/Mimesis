@@ -18,6 +18,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ros-${ROS_DISTRO}-xacro \
       ros-${ROS_DISTRO}-robot-state-publisher \
       ros-${ROS_DISTRO}-joint-state-publisher \
+      ros-${ROS_DISTRO}-joint-state-publisher-gui \
+      ros-${ROS_DISTRO}-rviz2 \
+      liburdfdom-tools \
       ros-${ROS_DISTRO}-ament-lint-auto \
       ros-${ROS_DISTRO}-ament-lint-common \
       ros-${ROS_DISTRO}-ament-cmake-clang-format \

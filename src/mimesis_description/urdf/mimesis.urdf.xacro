@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+  Top-level robot description for team Mimesis: the arm fixed to the world.
+  Add the gripper and the camera mount here, as their own macros, when they exist.
+
+  Arguments:
+    prefix             prefix for every arm link and joint name (default: none)
+    use_mock_hardware  true: fake hardware for development; false: the real arm
+-->
+<robot name="mimesis" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="use_mock_hardware" default="true"/>
+
+  <xacro:include filename="mycobot_280_jn.xacro"/>
+  <xacro:include filename="mimesis.ros2_control.xacro"/>
+
+  <link name="world"/>
+
+  <xacro:mycobot_280_jn prefix="$(arg prefix)" parent="world">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:mycobot_280_jn>
+
+  <xacro:mimesis_ros2_control name="mycobot_280" prefix="$(arg prefix)"
+    use_mock_hardware="$(arg use_mock_hardware)"/>
+
+</robot>
